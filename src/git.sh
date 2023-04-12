@@ -29,6 +29,3 @@ git_verify_tag() {
   return 1
 }
 
-get_allowed_signers_list() {
-  true
-}

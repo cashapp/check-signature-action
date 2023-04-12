@@ -20,7 +20,7 @@ The username who signed the tag, if any.
 ## Example usage
 
 ```yaml
-uses: actions/check-signature-action@v1
+uses: cashapp/check-signature-action@v0.1.0
 env:
   GH_TOKEN: ${{ github.token }}
 with:
