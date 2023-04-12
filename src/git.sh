@@ -10,6 +10,7 @@ git_checkout() {
     print_red "failed to clone ${GITHUB_REPOSITORY}"
     return 1
   fi
+  print_purple "##[debug] cloned ${GITHUB_REPOSITORY} to ${REPO_NAME}"
 }
 
 # Verify the tag in $GITHUB_REF_NAME and set $SIGNER to the given username if verification was successful
