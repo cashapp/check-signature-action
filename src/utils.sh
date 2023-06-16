@@ -69,8 +69,8 @@ get_authorized_usernames() {
   workflow_file_path="${workflow_file_path_with_ref%@*}"
   name_or_id=$GITHUB_ACTION
 
-  print_purple "##debug: step ID: \"${name_or_id}\""
-  print_purple "##debug: extracting list of authorized usernames from ${workflow_file_path}"
+  print_purple "##[debug] step ID: \"${name_or_id}\""
+  print_purple "##[debug] extracting list of authorized usernames from ${workflow_file_path}"
 
   # shellcheck disable=SC2034
   USERNAMES=$(yq e ".jobs.${GITHUB_JOB}.steps.[] | select(.name == \"${name_or_id}\" or .id == \"${name_or_id}\") | .with.allowed-release-signers" "${workflow_file_path}")
@@ -81,5 +81,5 @@ get_authorized_usernames() {
 
   popd > /dev/null || return 1
 
-  print_purple "##debug: allowed usernames for release: \"${USERNAMES}\""
+  print_purple "##[debug] allowed usernames for release: \"${USERNAMES}\""
 }
