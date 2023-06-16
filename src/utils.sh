@@ -13,6 +13,7 @@ _BLUE="\033[0;34m"
 readonly _BLUE
 _YELLOW="\033[0;33m"
 readonly _YELLO
+_PURPLE="\033[0;35m"
 
 # GitHub CLI common HTTP headers
 
@@ -56,6 +57,10 @@ print_yellow() {
   echo -e "${_YELLOW}$*${_RST}"
 }
 
+print_purple() {
+  echo -e "${_PURPLE}$*${_RST}"
+}
+
 get_authorized_usernames() {
   pushd "${REPO_NAME}" > /dev/null || return 1
 
@@ -64,10 +69,17 @@ get_authorized_usernames() {
   workflow_file_path="${workflow_file_path_with_ref%@*}"
   name_or_id=$GITHUB_ACTION
 
-  print_blue "extracting list of authorized usernames from ${workflow_file_path}"
+  print_purple "##debug: step ID: \"${name_or_id}\""
+  print_purple "##debug: extracting list of authorized usernames from ${workflow_file_path}"
 
   # shellcheck disable=SC2034
   USERNAMES=$(yq e ".jobs.${GITHUB_JOB}.steps.[] | select(.name == \"${name_or_id}\" or .id == \"${name_or_id}\") | .with.allowed-release-signers" "${workflow_file_path}")
+  if [[ $USERNAMES == "" ]]; then
+    print_red "Failed to get a list of allowed usernames"
+    return 1
+  fi
 
   popd > /dev/null || return 1
+
+  print_purple "##debug: allowed usernames for release: \"${USERNAMES}\""
 }

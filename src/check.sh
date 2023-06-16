@@ -28,11 +28,10 @@ if ! get_authorized_usernames; then
 fi
 
 for username in $(echo "${USERNAMES}" | tr "," "\n"); do
-  print_blue "trying to verify tag $GITHUB_REF_NAME with $username's keys"
+  print_blue "Verifying tag $GITHUB_REF_NAME with $username's keys"
   if ! create_allowed_signers_file "${username}" "${REPO_NAME}"; then
     continue
   fi
-
 
   if git_verify_tag "${username}"; then
     print_green "$GITHUB_REF_NAME was signed by $SIGNER"
