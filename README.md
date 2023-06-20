@@ -21,8 +21,12 @@ The username who signed the tag, if any.
 
 ```yaml
 uses: cashapp/check-signature-action@v0.1.0
+id: [unique string]
 env:
   GH_TOKEN: ${{ github.token }}
 with:
   allowed-release-signers: yoavamit,ddz
 ```
+
+Note that in order to properly use this action, an explicit `id` field must be provided for the step using this action.  
+The `id` value must be a unique string.
