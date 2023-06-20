@@ -63,7 +63,7 @@ print_purple() {
 }
 
 get_authorized_usernames() {
-  pushd "${REPO_NAME}" > /dev/null || return 1
+  pushd "${REPO_DIR}" > /dev/null || return 1
 
   print_purple "##[debug] step ID: \"${GITHUB_ACTION}\""
   print_purple "##[debug] extracting list of authorized usernames from ${WORKFLOW_FILE_PATH}"
