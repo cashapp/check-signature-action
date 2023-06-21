@@ -27,8 +27,12 @@ if [[ $GITHUB_REF_TYPE != "tag" ]]; then
   err "Signature check is only supported for git tags"
 fi
 
-REPO_NAME=$(echo "${GITHUB_REPOSITORY}" | cut -d'/' -f2)
-readonly REPO_NAME
+REPO_DIR=$(mktemp -d)
+readonly REPO_DIR
+
+if [[ ! -d "$REPO_DIR" ]]; then
+  err "Failed to create directory $REPO_DIR"
+fi
 
 if ! git_checkout; then
   err "FAILED"
@@ -40,7 +44,7 @@ fi
 
 for username in $(echo "${USERNAMES}" | tr "," "\n"); do
   print_blue "Verifying tag $GITHUB_REF_NAME with $username's keys"
-  if ! create_allowed_signers_file "${username}" "${REPO_NAME}"; then
+  if ! create_allowed_signers_file "${username}" "${REPO_DIR}"; then
     continue
   fi
 
