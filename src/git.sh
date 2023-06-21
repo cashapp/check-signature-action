@@ -6,7 +6,7 @@
 
 # clone the code repo this action is running in via the `gh` command line tool
 git_checkout() {
-  if ! gh repo clone "${GITHUB_REPOSITORY} ${REPO_DIR}"; then
+  if ! gh repo clone "${GITHUB_REPOSITORY}" "${REPO_DIR}"; then
     print_red "failed to clone ${GITHUB_REPOSITORY}"
     return 1
   fi
