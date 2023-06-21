@@ -16,6 +16,7 @@ jobs:
           make test
       - name: Check Git Signatures
         uses: ./
+        id: check-sig-id
         env:
           GH_TOKEN: ${{ github.token }}
         with:
